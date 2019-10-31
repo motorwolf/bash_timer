@@ -16,11 +16,18 @@ done
 min=$((min - 1))
 secs=$((60))
 done
+if [ $secs -gt 0 ]; then
+  while [ $secs -gt 0 ]; do
+    echo -ne "0 minutes $secs seconds \033[0K\r"
+    sleep 1
+    : $((secs--))
+  done
+fi
 #endTime=$(date +"%T %F")
 echo "$task : $originalMin minutes" >> ~/dailylog.txt
 echo "$startTime" >> ~/dailylog.txt
 #echo "$endTime" >> ~/dailylog.txt
 cat ~/dailylog.txt
-exec notify-send "Time's up!" 
-#exec mpv ~/audio/other/sound-effects/tibetian-singing-bowl.wav
+exec notify-send "Time's up!" &
+exec mpv ~/audio/other/sound-effects/tibetian-singing-bowl.wav
 
